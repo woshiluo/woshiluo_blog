@@ -1,0 +1,298 @@
+\documentclass[10pt]{beamer}
+\usepackage[UTF8]{ctex}
+% \usetheme{Warsaw}
+\usecolortheme{dove}
+\setbeamertemplate{background}{\includegraphics[height=\paperheight]{qwq.jpg}}
+\usefonttheme[onlymath]{seri}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{fontspec} % 定制字体
+\newfontfamily\menlo{Fira Code}
+\usepackage{xcolor} % 定制颜色
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{ %
+	showtabs=false
+backgroundcolor=\color{white},      % choose the background color
+basicstyle=\footnotesize\ttfamily,  % size of fonts used for the code
+columns=fullflexible,
+tabsize=4,
+breaklines=true,               % automatic line breaking only at whitespace
+captionpos=b,                  % sets the caption-position to bottom
+commentstyle=\color{mygreen},  % comment style
+escapeinside={\%*}{*)},        % if you want to add LaTeX within your code
+keywordstyle=\color{blue},     % keyword style
+stringstyle=\color{mymauve}\ttfamily,  % string literal style
+frame=single,
+rulesepcolor=\color{red!20!green!20!blue!20},
+% identifierstyle=\color{red},
+language=c++,
+}
+
+
+\title{科学的二分及三分}
+\author{Woshiluo\footnote{背景来源：恋×シンアイ彼女CG}}
+\institute{My blog: \href{https://blog.woshiluo.com}{https://blog.woshiluo.com}}
+\date{November 15, 2019}
+
+\begin{document}
+    \frame{\titlepage}
+ 
+	\begin{frame}
+		\frametitle{Content}
+		\tableofcontents
+    \end{frame}
+
+	\section{序}
+
+	\begin{frame}
+		\frametitle{序}
+		二分作为一种非常奇妙的东西，在 NOIP / CSP 考得较为平凡
+		
+		称二分为一种算法可能不如称二分为一种思想
+
+		所以还是需要自己去做题理解的
+
+		这篇课件仅仅讲述其思想及参考例题
+	\end{frame}
+
+	\section{二分}
+	\subsection{普通二分}
+	\begin{frame}
+		\frametitle{普通二分}
+		在数学上的二分法大家应该都有所了解
+
+		至少我在学 $\sqrt{2}$ 的时候就有老师跟我们讲过
+
+		不过这里要讲的二分会更加广义一些
+	\end{frame}
+
+	\begin{frame}[fragile]
+		\frametitle{普通二分}
+		通常来说，我们所讲述的二分都是指 「二分查找」
+
+		即「在一个有序数组中查找某一元素的算法」
+
+		\pause
+
+		以最普通的有序数列中找数为例
+
+		我们定义一个 \texttt{left} 和 \texttt{rig}
+
+		求出 $ mid = \frac{left + rig}{2} $
+
+		\pause
+
+		判断 \texttt{mid} 与要查询的大小
+
+		然后就可以缩小查找区间
+
+		每次查询会将查询范围减半，所以复杂度为 $O(\log n)$
+
+		\pause
+
+		\begin{lstlisting}[title=参考代码, frame=shadowbox]
+int left = 0, rig = 20000000001, res = 0;
+while( left <= rig ) {
+    int mid = ( left + rig ) >> 1;
+    if( check(mid) < m )
+        rig = mid - 1;
+    else {
+        res = mid;
+        left = mid + 1;
+    }
+}\end{lstlisting}
+	\end{frame}
+	\begin{frame}
+		\frametitle{普通二分}
+		大家应该也注意到了上面的参考代码中的 \texttt{check()} 函数
+
+		换一种思路，如果我们现在有一个问题，我们可以将问题化为 
+
+		\pause
+
+		有一个函数 $f(x)$ 在 $ left \leq x \leq rig $ 中 $f(x)$ 随 $x$ 增长而单增/单减
+
+		\pause
+
+		那么现在要找到 $ f(x) = y$ 时 $x$ 的值（保证 $ left \leq x \leq rig $ ) ，我们就可以使用二分的方式来解决
+	\end{frame}
+	\subsubsection{例题 Luogu P1873 砍树}
+	\begin{frame}
+		\frametitle{例题 Luogu P1873 砍树}
+		题目链接: \href{https://www.luogu.com.cn/problem/P1873}{https://www.luogu.com.cn/problem/P1873}
+
+		我们可以将题目中的问题设为 $f(x)$
+
+		即当高度为 $x$ 时，我们能不能够获得足够的树木
+
+		\pause
+
+		能函数返回 $1$ 不能函数返回 $0$
+
+		\pause
+
+		现在要找到第一个 $1$ 所在的 $x$ 
+	\end{frame}
+	\begin{frame}
+		\frametitle{例题 Luogu P1873 砍树}
+		对于这一类问题，不同的人有不同的做法
+
+		\pause
+
+		在李煜东的「算法竞赛进阶指南」，详细的讲述了通过调整对于区间左右端点的偏移来解决问题的方案
+
+		\pause
+
+		这里讲述一种我比较习惯的方案，就是通过 \texttt{res} 的记录
+
+		即每一次 \texttt{check()} 返回值为真时，我们记录下当前的 \texttt{res}
+
+		最后输出 \texttt{res} 即可
+
+		\pause
+
+		参考代码: \href{https://www.luogu.com.cn/paste/uj4ayk68}{https://www.luogu.com.cn/paste/uj4ayk68}
+	\end{frame}
+	
+	\subsubsection{附加习题}
+	\begin{frame}
+		\frametitle{附加习题}
+		Luogu P5021 赛道修建
+
+		参考代码: \href{https://www.luogu.com.cn/paste/u4ihzowj}{https://www.luogu.com.cn/paste/u4ihzowj}
+
+		\pause
+
+		Luogu P1084 疫情控制
+
+		参考代码: \href{https://www.luogu.com.cn/paste/5vozgj4k}{https://www.luogu.com.cn/paste/5vozgj4k}
+
+		后面会补博客的...
+	\end{frame}
+
+	\subsection{ 01 分数规划 }
+	\begin{frame}
+		\frametitle{01 分数规划}
+		分数规划通常是指这一类问题
+
+		每个物品有两个属性 $a_i$ $b_i$
+
+		现在要选出若干个物品，使得 $\frac{\sum{b_i}}{\sum{a_i}}$ 最值
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{01 分数规划}
+		设当前确定的答案为 $ans$
+		
+		假设我们要求的是最大的
+
+		则
+
+		\pause
+
+		\begin{align}
+			\nonumber
+			\frac{\sum{b_i}}{\sum{a_i}} & \leq ans \\
+			\nonumber
+			\sum{b_i} & \leq \sum{a_i} \times ans \\
+			\nonumber
+			\sum{b_i} - \sum{a_i} \times ans  & \leq 0
+		\end{align}
+
+		\pause
+
+		然后你发现这个式子是随左边的 $ans$ 变化而单调变化
+
+		\pause
+
+		二分即可
+	\end{frame}
+
+	\subsubsection{例题 NovaOJ 16037 地图}
+	\begin{frame}
+		\frametitle{例题 NovaOJ 16037 地图}
+		这个题目很明显可以化成上面的式子
+
+		\pause
+
+		\texttt{check()}的时候，枚举起点，分别跑最长路，查询最长路是否 $ \geq 0 $ 
+
+		然后就是标准的二分了
+
+		复杂度 $ O( n \log n ) $
+
+		\pause
+
+		参考代码: \href{https://noj.ac/submission/2506}{https://noj.ac/submission/2506}
+	\end{frame}
+	\subsubsection{附加习题}
+	\begin{frame}
+		\frametitle{附加习题}
+
+		Luogu P4322 [JSOI2016]最佳团体
+
+		参考代码: \href{https://www.luogu.com.cn/paste/rgu4jfzq}{https://www.luogu.com.cn/paste/rgu4jfzq}
+	\end{frame}
+
+	\section{三分}
+	\begin{frame}[fragile]
+		\frametitle{三分}
+		
+		这个东西完全是食之无用，弃之可惜
+
+		\pause
+
+		因为这个东西是用于求单峰函数极值的
+
+		\pause
+
+		然而为什么不求导后直接二分呢？
+
+		疑惑...
+
+		和二分一个原理 
+
+		\pause
+
+		\begin{lstlisting}[title=参考代码, frame=shadowbox]
+lmid = left + (right - left >> 1);
+rmid = lmid + (right - lmid >> 1);  // 对右侧区间取半
+if (cal(lmid) > cal(rmid))
+    right = rmid;
+else
+    left = lmid;
+\end{lstlisting}
+
+	\end{frame}
+
+	\section{尾}
+	\begin{frame}
+		\frametitle{尾}
+		希望这篇可见能够给您一点帮助
+
+		二分这个东西可以套各种东西
+
+		比如数据结构，最短路，网络流，DP
+
+		总而言之，不要被标准化的二分局限住了思想
+
+		就这样子
+
+		「Fightだよ！」
+	\end{frame}
+
+	\subsection{版权声明}
+
+	\begin{frame}
+		\frametitle{版权声明}
+		本课件在写作过程中，参考了以下内容，在此向原内容创作者表示感谢
+
+		\href{https://oi-wiki.org/basic/binary/}{ Oi - Wiki 二分 }
+
+		\pause
+		本课件使用 \href{https://creativecommons.org/licenses/by-sa/4.0/deed.zh}{CC BY-SA 4.0} 和 \href{https://github.com/zTrix/sata-license}{SATA} 协议
+	\end{frame}
+
+\end{document}

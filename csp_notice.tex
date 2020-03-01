@@ -1,0 +1,199 @@
+\documentclass[10pt]{beamer}
+\usepackage[UTF8]{ctex}
+% \usetheme{Warsaw}
+\usecolortheme{dove}
+\setbeamertemplate{background}{\includegraphics[height=\paperheight]{bg.jpg}}
+
+\title{ Woshiluo 的自我总结}
+\author{Woshiluo\footnote{背景来源：恋×シンアイ彼女CG}}
+\institute{My blog: \href{https://blog.woshiluo.com}{https://blog.woshiluo.com}}
+\date{November 15, 2019}
+
+\begin{document}
+    \frame{\titlepage}
+ 
+	\begin{frame}
+		\frametitle{Content}
+		\tableofcontents
+    \end{frame}
+
+	\section{序}
+
+    \begin{frame}
+        \frametitle{序}
+        老师们说要我们这群参加过 NOI 的写写总结
+
+		虽然我参加过 NOI，但是打铁了...
+
+		而且感觉过了一年感觉自己更菜了
+
+		不过还是写一写吧，就当自己的总结
+    \end{frame}
+
+	\section{心态}
+
+	\subsection{考场心态}
+	\begin{frame}
+		\frametitle{考场心态}
+		\sout{我应该是整个机房里最没有资格讨论考场心态的人}
+		
+		\pause
+
+		首先就是考场不要慌
+
+		NOI 系列比赛通常对你代码能力要求不大
+
+		根据经验，你考场上敲不出来的东西
+
+		绝大多数你的同学们也敲不出来
+
+		\pause
+
+		不要想结果
+
+		\sout{比如 15owzLy1 是不是已经 AK 了啊之类的}
+
+		想结果往往会分散注意力，不如好好想题目
+
+		\sout{虽然这个东西说来容易做来难}
+	\end{frame}
+
+	\subsection{场外心态}
+	\begin{frame}
+		\frametitle{场外心态}
+		众所周知，CSP-S2 是要考两天的
+
+		\pause
+		
+
+		对于这种两天的考试，最好在 Day1 考完之后不要讨论题目一类的题目
+
+		\sout{虽然 NOI 中间会强制社会活动}
+
+		\pause
+		
+
+		然后就是不要自暴自弃
+	\end{frame}
+
+	\section{读题}
+	\begin{frame}
+		\frametitle{读题}
+		\textbf{如果有能力，一定一定要手推样例}
+
+		这个可以防止 90\% 的理解问题
+
+		\pause
+		
+
+		最后将思路在演草纸上确定个大概
+
+		再上手键盘
+
+		可以最大程度的减少不必要的动脑和代码
+
+		\pause
+		
+
+		还有，虽然说 CSP/NOIP 中确确实实有原题的状况出现\footnote{参见……算了，不鞭尸了}
+
+		\pause
+		
+
+		但是一定不要觉得自己做过就上手瞎写，容易白给
+	\end{frame}
+
+	\section{程序}
+
+	\subsection{代码以外的细节}
+	\begin{frame}
+		\frametitle{代码以外的细节\footnote{neta 「时间之外的往事」}}
+		编译一定要加 \texttt{-Wall -Wextra -Wshadow}，虽然会报一些无意义错误总是有用的
+
+		\pause
+
+		警惕 \texttt{Dev-CPP} 的默认头文件缓存，它可能会让你少加头文件
+
+		\pause
+
+		注意不要错误的在 \texttt{freopen()} 中打开文件
+
+		\textbf{特别是写入 \texttt{.cpp/.ans} 这种奇妙的问题}
+
+		\pause 
+
+		不要沉迷优化暴力
+	\end{frame}
+
+	\subsection{代码中的奇妙细节}
+	\begin{frame}
+		\frametitle{代码中的奇妙细节}
+		小心变量初值问题，不合适/未定义的初值可能样例并不能检查出来这种问提
+
+		\sout{可以通过开 O2 来测试样例检测自己有没有} UB\footnote{未定义行为}
+		
+		\pause
+
+		内存也是一个自己测不出来的东西，一定一定要算内存 desu
+
+		\sout{我已经见过两个人没算内存死亡了}
+
+		\pause
+
+		虽然 STL 很快乐，而且 CCF 的机子也很快\footnote{至少去年是 \texttt{i7-8700k}}\footnote{但是去年也有被卡 STL 常的人}
+
+		但是不开 O2 的 STL 因为封装过度，速度依然很感人
+
+		\pause
+
+		特判写 \texttt{namespace} 有很大的快乐
+
+		不过注意分号有没有在特别的位置上
+	\end{frame}
+
+	\section{一点小东西}
+	\subsection{思路}
+	\begin{frame}
+		\frametitle{思路}
+		多上厕所，提神还能验证思路
+
+		许多大佬们想题都是在上厕所时想起来的
+		
+		\sout{而且万一听到大佬在说正解呢？}
+
+		\pause
+
+		根据经验，第一直觉，往往是错的，不要死想
+
+		\pause
+
+		面对数学题的最好方法，就是打表！\footnote{neta 了……不说了，大家都知道}
+
+		顺带一提，遇字符串不决，就用哈希
+
+		\pause
+
+		\sout{ $n^2$ 过百万，暴力碾表算} \footnote{参见 CCF NOI WC 2017 挑战}
+	\end{frame}
+
+	\subsection{场地}
+	\begin{frame}
+		\frametitle{场地}
+		这次还是在七十中
+
+		小心特派员的嗓门，真的很大，不要试图和她杠
+
+		不要管别人在干什么，特别是不要怕键盘声音，他可能只是在调 \texttt{vimrc}
+	\end{frame}
+
+	\section{结}
+	\begin{frame}
+		\frametitle{结}
+		嘛，但愿能帮助到大家吧
+
+		总而言之，大家 RP ++
+
+		「Fightだよ！」
+	\end{frame}
+
+\end{document}
